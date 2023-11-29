@@ -2,15 +2,29 @@ import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import styles from "../../../styles/styles";
-import { AiFillHeart, AiOutlineHeart, AiOutlineMessage, AiOutlineShoppingCart } from "react-icons/ai";
+import {
+  AiFillHeart,
+  AiOutlineHeart,
+  AiOutlineMessage,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
+import { backend_url } from "../../../server";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
 
+  const decrementCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+  const incrementCount = () => {
+    setCount(count + 1);
+  };
   const handleMessageSubmit = () => {};
-  const removeFromWishlistHandler=()=>{};
-  const addToWishlistHandler =()=>{};
+  const removeFromWishlistHandler = () => {};
+  const addToWishlistHandler = () => {};
 
   return (
     <div className="bg-[#fff]">
@@ -23,11 +37,14 @@ const ProductDetailsCard = ({ setOpen, data }) => {
           />
           <div className=" block w-full 800px:flex ">
             <div className="w-full 800px:w-[50%]">
-              <img src={data.image_Url[0].url} alt="" />
+              <img
+                src={`${backend_url}${data.images && data.images[0]}`}
+                alt=""
+              />
               <div className="flex">
-                <Link to={`/shop/preview/${data.id}`} className="flex">
+                <Link to={`/shop/preview/${data.shop._id}`} className="flex">
                   <img
-                    src={data.shop.shop_avatar.url}
+                    src={`${backend_url}${data?.shop?.avatar}`}
                     alt=""
                     className="w-[50px] h-[50px] rounded-full mr-2"
                   />
@@ -61,18 +78,24 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   {data.discount_price}$
                 </h4>
                 <h3 className={`${styles.price}`}>
-                  {data.price ? data.price + "$" : null}
+                  {data.originalPrice ? data.originalPrice + "$" : null}
                 </h3>
               </div>
-              <div>
+              <div className="flex items-center mt-12 justify-between pr-3">
                 <div>
-                  <button className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold  rounded-1 px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out">
+                  <button
+                    className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold  rounded-1 px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
+                    onClick={decrementCount}
+                  >
                     -
                   </button>
                   <span className="bg-gray-200 text-gray-800 font-medium px-4 py-[11px]">
                     {count}
                   </span>
-                  <button className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold  rounded-1 px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out">
+                  <button
+                    className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold  rounded-1 px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
+                    onClick={incrementCount}
+                  >
                     +
                   </button>
                 </div>
@@ -82,22 +105,24 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                       size={30}
                       className="cursor-pointer"
                       color={click ? "red" : "#333"}
-                      onClick={()=> removeFromWishlistHandler(data)}
+                      onClick={() => removeFromWishlistHandler(data)}
                       title="Remove from wishlist"
                     />
                   ) : (
                     <AiOutlineHeart
                       size={30}
                       className="cursor-pointer"
-                      onChange={()=>addToWishlistHandler(data)}
+                      onChange={() => addToWishlistHandler(data)}
                       title="Add to wishlist"
                     />
                   )}
                 </div>
               </div>
-              <div className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center`}>
+              <div
+                className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center`}
+              >
                 <span className="text-[#fff] flex items-center">
-                    Add to cart <AiOutlineShoppingCart className="ml-1" />
+                  Add to cart <AiOutlineShoppingCart className="ml-1" />
                 </span>
               </div>
             </div>
