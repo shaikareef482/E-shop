@@ -71,7 +71,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 export const getAllProducts = () => async (dispatch) => {
   try {
     dispatch({
-      type: " getAllProductsRequest",
+      type: "getAllProductsRequest",
     });
 
     const { data } = await axios.get(`${server}/product/get-all-products`);
