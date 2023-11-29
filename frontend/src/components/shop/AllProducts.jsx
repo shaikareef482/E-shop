@@ -9,10 +9,10 @@ import { deleteProduct } from "../../redux/actions/product";
 import Loader from "../Layout/Loader";
 
 const AllProducts = () => {
-  const { products, isLoading } = useSelector((state) => state.product);
+  const { allProducts, isLoading } = useSelector((state) => state.product);
   const { seller } = useSelector((state) => state.seller);
 
-   console.log(products);
+   console.log(allProducts);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -95,8 +95,8 @@ const AllProducts = () => {
 
   const row = [];
 
-  products &&
-    products.forEach((item) => {
+  allProducts &&
+  allProducts.forEach((item) => {
       row.push({
         id: item?._id,
         name: item?.name,
