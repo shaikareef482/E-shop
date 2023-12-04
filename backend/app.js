@@ -29,9 +29,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   });
 }
 
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
+
 
 const user = require("./controller/user");
 const shop = require("./controller/shop");
