@@ -18,7 +18,7 @@ const ProductDetailsPage = () => {
     const data = productData.find((i)=> i.name === productName);
     setData(data);
 
-  },[])
+  },[]) //eslint-disable-line
   return (
     <div>
       <Header />
