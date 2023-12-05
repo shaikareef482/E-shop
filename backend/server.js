@@ -14,12 +14,14 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET","POST","PUT","PATCH","DELETE"],
-  })
-);
+app.use(cors());
+
+app.use((req,res,next)=>{
+  res.setHeader("Access-Control-Allow-Origin","*");
+  res.header("Access-Control-Allow-methods","GET,POST,PUT,PATCH,DELETE");
+  res.header("Access-Control-Allow-Headers","Origin,X-requested-With,Content-Type,Accept,Authorization");
+  next();
+})
 
 connectDatabase();
 
