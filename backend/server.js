@@ -1,5 +1,6 @@
 const app = require("./app");
 const connectDatabase = require("./db/Database");
+const cors = require("cors");
 const path = require("path");
 const express = require("express");
 process.on("uncaughtException", (err) => {
@@ -13,21 +14,25 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,PATCH,DELECT",
+  })
+);
+
 connectDatabase();
 
 const __dirname1 = path.resolve();
-if(process.env.NODE_ENV === 'production')
-{
-    app.use(express.static(path.join(__dirname1,"/frontend/build")));
-    app.get('*',(req,res)=>{
-        res.sendFile(path.resolve(__dirname1,"frontend","build","index.html"));
-    });
-
-}else{
-    app.get('/',(req,res)=>{
-        res.send("API is Running Successfully");
-    })
-
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/frontend/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is Running Successfully");
+  });
 }
 
 const server = app.listen(process.env.PORT, () => {
